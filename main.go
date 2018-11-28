@@ -4,6 +4,7 @@ import (
 	"crypto_util/symmetric/des"
 	"crypto_util/symmetric/aes"
 	"crypto_util/symmetric/tri_des"
+	"crypto_util/hash"
 	"fmt"
 )
 
@@ -12,7 +13,9 @@ func main() {
 	//Des_Test()
 	//TriDes_Test()
 	//RsaGenerate_Test()
-	PubEncrypt_Test()
+	//PubEncrypt_Test()
+	//MD5_Test()
+	SHA256_Test()
 }
 
 //测试des
@@ -77,4 +80,20 @@ func PubEncrypt_Test() {
 	}
 
 	fmt.Println("解密结果:",string(data))
+}
+
+//测试md5算hash
+func MD5_Test() {
+	fmt.Println("===== md5hash运算 =====")
+	src := []byte("md5运算测试")
+	res := hash.GetMd5Str(src)
+	fmt.Println("hash：",res)
+}
+
+//测试sha256算hash
+func SHA256_Test() {
+	fmt.Println("===== sha256hash运算 =====")
+	src := []byte("sha256运算测试")
+	res := hash.GetSHA256Str(src)
+	fmt.Println("hash：",res)
 }
