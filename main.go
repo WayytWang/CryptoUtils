@@ -4,6 +4,7 @@ import (
 	"crypto_util/symmetric/des"
 	"crypto_util/symmetric/aes"
 	"crypto_util/symmetric/tri_des"
+	"crypto_util/asymmetric/sign"
 	"crypto_util/hash"
 	"fmt"
 )
@@ -15,7 +16,8 @@ func main() {
 	//RsaGenerate_Test()
 	//PubEncrypt_Test()
 	//MD5_Test()
-	SHA256_Test()
+	//SHA256_Test()
+	Sign_Test()
 }
 
 //测试des
@@ -80,6 +82,32 @@ func PubEncrypt_Test() {
 	}
 
 	fmt.Println("解密结果:",string(data))
+}
+
+//测试签名校验
+func Sign_Test(){
+	fmt.Println("===== 签名校验 =====")
+	src := []byte("测试签名校验")
+
+	//加密明文
+	msg,err := rsa.EncryptRSAPub(src,"public.pem")
+	if err != nil {
+		fmt.Println("错误信息：",err)
+	}
+
+	//签名
+	signature,err := sign.Signature(src,"private.pem")
+	if err != nil {
+		fmt.Println("错误信息：",err)
+	}
+
+	//验证签名
+	err = sign.ValidateSign(msg,signature,"private.pem","public.pem")
+	if err != nil {
+		fmt.Println("错误信息：",err)
+	}
+
+	fmt.Println("校验成功")
 }
 
 //测试md5算hash
